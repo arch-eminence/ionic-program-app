@@ -1,4 +1,4 @@
-# 📱 Ionic Program App
+# Ionic Program App
 
 A mobile app built with Ionic Framework and Angular that allows users to search and view university programs.
 
