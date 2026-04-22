@@ -1,0 +1,99 @@
+<!-- src/app/components/filter-modal/filter-modal.component.html -->
+<div class="modal-container">
+  <!-- Handle bar -->
+  <div class="handle-bar"></div>
+
+  <!-- Header -->
+  <div class="modal-header">
+    <h2 class="modal-title">Filter</h2>
+    <button class="close-btn" (click)="dismiss()">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+  </div>
+
+  <!-- Scrollable content -->
+  <div class="modal-body">
+
+    <!-- Tags / Subjects -->
+    <div class="filter-section">
+      <h3 class="filter-section-title">Subject Tags</h3>
+      <div class="tags-grid">
+        <div
+          class="tag-chip"
+          [class.selected]="isTagSelected(tag)"
+          *ngFor="let tag of allTags"
+          (click)="toggleTag(tag)"
+        >
+          {{ tag }}
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <!-- Level -->
+    <div class="filter-section">
+      <h3 class="filter-section-title">Level</h3>
+      <div class="radio-list">
+        <div
+          class="radio-item"
+          *ngFor="let level of levels"
+          (click)="selectedLevel = level"
+        >
+          <span class="radio-label">{{ level }}</span>
+          <div class="radio-circle" [class.checked]="selectedLevel === level">
+            <div class="radio-dot" *ngIf="selectedLevel === level"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <!-- Attendance -->
+    <div class="filter-section">
+      <h3 class="filter-section-title">Attendance</h3>
+      <div class="radio-list">
+        <div
+          class="radio-item"
+          *ngFor="let att of attendances"
+          (click)="selectedAttendance = att"
+        >
+          <span class="radio-label">{{ att }}</span>
+          <div class="radio-circle" [class.checked]="selectedAttendance === att">
+            <div class="radio-dot" *ngIf="selectedAttendance === att"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <!-- Country -->
+    <div class="filter-section">
+      <h3 class="filter-section-title">Country</h3>
+      <div class="radio-list">
+        <div
+          class="radio-item"
+          *ngFor="let country of countries"
+          (click)="selectedCountry = country"
+        >
+          <span class="radio-label">{{ country }}</span>
+          <div class="radio-circle" [class.checked]="selectedCountry === country">
+            <div class="radio-dot" *ngIf="selectedCountry === country"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer buttons -->
+  <div class="modal-footer">
+    <button class="reset-btn" (click)="reset()">Reset all</button>
+    <button class="apply-btn" (click)="apply()">
+      Apply filters
+      <span class="apply-count" *ngIf="totalSelected > 0">{{ totalSelected }}</span>
+    </button>
+  </div>
+</div>

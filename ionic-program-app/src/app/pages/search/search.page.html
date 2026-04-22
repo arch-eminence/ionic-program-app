@@ -1,0 +1,122 @@
+<!-- src/app/pages/search/search.page.html -->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" color="dark">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="search-dropdown" (click)="toggleSearchDropdown()">
+      <div class="search-dropdown-inner">
+        <p class="search-label">What do you want to study?</p>
+        <p class="search-value">{{ selectedSubject }}</p>
+      </div>
+      <ion-icon name="chevron-down-outline"></ion-icon>
+    </div>
+  </ion-toolbar>
+
+  <!-- Sort & Filter bar -->
+  <div class="filter-bar">
+    <button class="filter-btn" (click)="openSortModal()">
+      <ion-icon name="reorder-two-outline"></ion-icon>
+      <span>Sort</span>
+    </button>
+    <div class="divider-v"></div>
+    <button class="filter-btn" (click)="openFilterModal()">
+      <ion-icon name="options-outline"></ion-icon>
+      <span>Filter</span>
+      <span class="filter-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
+    </button>
+  </div>
+
+  <!-- Active filter chips -->
+  <div class="active-chips" *ngIf="activeChips.length > 0">
+    <div class="chips-scroll">
+      <div class="chip" *ngFor="let chip of activeChips">
+        {{ chip }}
+        <ion-icon name="close-outline" (click)="removeChip(chip)"></ion-icon>
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="results-header">
+    <h2 class="results-title">Search result</h2>
+  </div>
+
+  <!-- Program Cards -->
+  <div class="cards-list">
+    <div
+      class="program-card"
+      *ngFor="let program of filteredPrograms"
+      (click)="goToDetail(program)"
+    >
+      <!-- Card Image -->
+      <div class="card-image-wrap">
+        <img [src]="program.image" [alt]="program.title" class="card-img" />
+        <div class="university-logo">
+          <span class="logo-text">UN<br>GRA</span>
+        </div>
+        <div class="official-badge" *ngIf="program.isOfficialPartner">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          Official Partner
+        </div>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <h3 class="card-title">{{ program.title }}</h3>
+
+        <p class="card-university">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          {{ program.university }}
+        </p>
+
+        <div class="card-meta">
+          <span>{{ program.countryFlag }} {{ program.country }}</span>
+          <span>
+            <ion-icon name="school-outline"></ion-icon>
+            {{ program.level }}
+          </span>
+          <span>
+            <ion-icon name="time-outline"></ion-icon>
+            {{ program.attendance }}
+          </span>
+          <span>
+            <ion-icon name="calendar-outline"></ion-icon>
+            {{ program.duration }}
+          </span>
+        </div>
+
+        <p class="card-language">
+          <ion-icon name="language-outline"></ion-icon>
+          {{ program.language }}
+        </p>
+
+        <div class="card-footer">
+          <span class="card-price">{{ program.tuitionFee }}</span>
+          <div class="card-actions">
+            <button class="action-btn" (click)="shareProgram(program, $event)">
+              <ion-icon name="share-social-outline"></ion-icon>
+            </button>
+            <button
+              class="action-btn"
+              [class.favorited]="program.isFavorite"
+              (click)="toggleFavorite(program, $event)"
+            >
+              <ion-icon [name]="program.isFavorite ? 'heart' : 'heart-outline'"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="filteredPrograms.length === 0">
+    <ion-icon name="search-outline"></ion-icon>
+    <p>No programs found</p>
+    <span>Try adjusting your filters</span>
+  </div>
+</ion-content>

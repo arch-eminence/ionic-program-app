@@ -1,0 +1,259 @@
+<!-- src/app/pages/detail/detail.page.html -->
+<ion-content [fullscreen]="true" class="detail-content">
+
+  <!-- Hero Image -->
+  <div class="hero-wrap">
+    <img [src]="program?.image" [alt]="program?.title" class="hero-img" />
+
+    <!-- Floating back button -->
+    <button class="back-btn" (click)="goBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </button>
+
+    <!-- Floating action buttons -->
+    <div class="hero-actions">
+      <button
+        class="hero-action-btn"
+        [class.favorited]="program?.isFavorite"
+        (click)="toggleFavorite()"
+      >
+        <ion-icon [name]="program?.isFavorite ? 'heart' : 'heart-outline'"></ion-icon>
+      </button>
+      <button class="hero-action-btn" (click)="share()">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </button>
+    </div>
+
+    <!-- University logo overlay -->
+    <div class="hero-logo">
+      <span class="logo-text">UN<br>GRA</span>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="detail-body">
+
+    <!-- Title & University -->
+    <h1 class="detail-title">{{ program?.title }}</h1>
+
+    <div class="detail-university">
+      <ion-icon name="shield-checkmark-outline" color="primary"></ion-icon>
+      <span>{{ program?.university }}</span>
+      <span class="dot">·</span>
+      <span>{{ program?.countryFlag }} {{ program?.country }}</span>
+    </div>
+
+    <!-- Description -->
+    <p class="detail-desc">{{ program?.description }}</p>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <div class="stat">
+        <ion-icon name="eye-outline"></ion-icon>
+        <span>{{ program?.views | number }} Views</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <ion-icon name="trending-up-outline"></ion-icon>
+        <span>{{ program?.impressions | number }} Impression</span>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Program Breakdown -->
+    <section class="section">
+      <h2 class="section-title">Program Breakdown</h2>
+      <div class="breakdown-grid">
+        <div class="breakdown-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.duration }}</p>
+            <p class="breakdown-label">Duration</p>
+          </div>
+        </div>
+        <div class="breakdown-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.level }}</p>
+            <p class="breakdown-label">Level</p>
+          </div>
+        </div>
+        <div class="breakdown-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.tuitionFee }}</p>
+            <p class="breakdown-label">Tuition Fee</p>
+          </div>
+        </div>
+        <div class="breakdown-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.attendance }}</p>
+            <p class="breakdown-label">Attendance</p>
+          </div>
+        </div>
+        <div class="breakdown-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">Fulltime</p>
+            <p class="breakdown-label">Attendance</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Description Section -->
+    <section class="section">
+      <h2 class="section-title">Description</h2>
+      <p class="section-text" [class.expanded]="descExpanded">
+        {{ program?.description }}
+      </p>
+      <button class="read-more-btn" (click)="descExpanded = !descExpanded">
+        {{ descExpanded ? 'Show less' : 'Read more' }}
+        <ion-icon [name]="descExpanded ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+      </button>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Requirements -->
+    <section class="section">
+      <h2 class="section-title">Requirement</h2>
+      <div class="requirements-list">
+        <div class="requirement-item" *ngFor="let req of program?.requirements">
+          <ion-icon name="checkmark-outline" class="req-check"></ion-icon>
+          <p>{{ req }}</p>
+        </div>
+      </div>
+      <button class="read-more-btn" (click)="reqExpanded = !reqExpanded">
+        {{ reqExpanded ? 'Show less' : 'Read more' }}
+        <ion-icon [name]="reqExpanded ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+      </button>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Structure -->
+    <section class="section">
+      <h2 class="section-title">Structure</h2>
+      <p class="section-text" [class.expanded]="structExpanded">
+        {{ program?.structure }}
+      </p>
+      <button class="read-more-btn" (click)="structExpanded = !structExpanded">
+        {{ structExpanded ? 'Show less' : 'Read more' }}
+        <ion-icon [name]="structExpanded ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+      </button>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Fees -->
+    <section class="section">
+      <h2 class="section-title">Fees</h2>
+      <p class="section-text">{{ program?.fees }}</p>
+
+      <div class="fees-grid">
+        <div class="fee-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.housingFee }}</p>
+            <p class="breakdown-label">Housing Fee</p>
+          </div>
+        </div>
+        <div class="fee-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.acceptanceFee }}</p>
+            <p class="breakdown-label">Acceptance Fee</p>
+          </div>
+        </div>
+        <div class="fee-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.tuitionFee }}</p>
+            <p class="breakdown-label">Tuition Fee</p>
+          </div>
+        </div>
+        <div class="fee-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.applicationFee }}</p>
+            <p class="breakdown-label">Application Fee</p>
+          </div>
+        </div>
+        <div class="fee-item">
+          <ion-icon name="diamond-outline" class="breakdown-icon"></ion-icon>
+          <div>
+            <p class="breakdown-value">{{ program?.livingFee }}</p>
+            <p class="breakdown-label">Living Fee</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Extra Information -->
+    <section class="section">
+      <h2 class="section-title">Extra Information</h2>
+      <div class="extra-list">
+        <div class="extra-item">
+          <div class="extra-icon-wrap">
+            <ion-icon name="location-outline"></ion-icon>
+          </div>
+          <div>
+            <p class="extra-value">{{ program?.extraInfo?.campus }}</p>
+            <p class="extra-label">Campuse(s)</p>
+          </div>
+        </div>
+        <div class="extra-item">
+          <div class="extra-icon-wrap">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+          <div>
+            <p class="extra-value">{{ program?.extraInfo?.intake }}</p>
+            <p class="extra-label">Intakes</p>
+          </div>
+        </div>
+        <div class="extra-item">
+          <div class="extra-icon-wrap">
+            <ion-icon name="language-outline"></ion-icon>
+          </div>
+          <div>
+            <p class="extra-value">{{ program?.extraInfo?.language }}</p>
+            <p class="extra-label">Study Language</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom spacer for sticky footer -->
+    <div style="height: 120px;"></div>
+  </div>
+</ion-content>
+
+<!-- Sticky Bottom Bar -->
+<div class="sticky-footer">
+  <div class="sticky-program-info">
+    <div class="sticky-logo">
+      <span class="logo-text">UN<br>GRA</span>
+    </div>
+    <div>
+      <p class="sticky-title">{{ program?.title }}</p>
+      <p class="sticky-price">{{ program?.tuitionFee }}</p>
+    </div>
+  </div>
+  <div class="sticky-actions">
+    <button class="back-action-btn" (click)="goBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+      Back
+    </button>
+    <button class="apply-btn" (click)="apply()">
+      Apply now
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </button>
+  </div>
+</div>
