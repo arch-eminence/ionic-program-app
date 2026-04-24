@@ -26,3 +26,23 @@ ionic serve
 - Full detail page with fees, requirements, structure
 - Angular routing between pages
 - Mock data with TypeScript interfaces
+## Known Limitations & Areas for Improvement
+Current Limitations
+
+No real API — All data is hardcoded mock data. A real app would use Angular HttpClient with a REST API.
+No persistent favorites — Favorites reset on page refresh. Would need localStorage or a backend to persist.
+No search debounce — The search input triggers immediately. A debounceTime RxJS operator should be added for performance.
+Images are external URLs — Program images are loaded from Unsplash. In production, images would be served from a CDN or the app's own storage.
+No loading states — There are no skeleton screens or loading spinners for when data loads. In a real app with API calls, these would be essential.
+No error handling — There is no UI feedback for failed data fetches or navigation errors.
+
+## Areas for Improvement
+
+Add a service layer — Create a ProgramService to handle all data fetching, separating concerns from the components.
+Add unit tests — Component specs with Jasmine/Karma and e2e tests with Cypress.
+Infinite scroll — Replace the static list with ion-infinite-scroll for large datasets.
+Search with debounce — Use RxJS Subject + debounceTime for real-time search.
+Animations — Add page transition animations and card entrance animations.
+Accessibility — Add proper aria-label attributes and keyboard navigation support.
+PWA support — Add a service worker for offline capability using @angular/pwa.
+
